@@ -45,14 +45,14 @@ $host="localhost";
 $user="root";
 $password="";
 $dbname="customer";
-$message= "";
+
 	
 	$conn = new mysqli($host, $user, $password, $dbname);
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
 	}
 
-if (isset($_POST['submit'])){
+if (isset($_POST['unit-submit'])){
 
 
 	
@@ -63,13 +63,14 @@ $units = isset($_POST['units']) ? $_POST['units'] : null;
 
 
 
-$sql = "INSERT INTO customerdetails(FirstName, LastName, CustomerAddress, UnitsUsed, BillAmount)
-VALUES ('$fname','$lname','$address', $units, $result) " ;
+$sql = "insert into customerdetails (FirstName, LastName, CustomerAddress, UnitsUsed, BillAmount)
+values ('$fname','$lname','$address', $units, $result) " ;
   
-  if ($conn->query($sql) === TRUE) {
-    $message= "New record created successfully";
-} 
-	
+if (mysqli_query($conn, $sql)) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
   
 
     $conn->close();
@@ -118,7 +119,7 @@ VALUES ('$fname','$lname','$address', $units, $result) " ;
 
   </form>
   <p> <?php echo $result_str; ?></p>
-  <p> <?php echo $message; ?></p>
+
 </div>
 
 </div>
